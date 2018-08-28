@@ -6,6 +6,10 @@ def requestURL(url):
 	data = r.json()
 	return data
 
+"""
+ACHIEVEMENT DEFINITIONS
+"""
+# Gathers the Daily IDs for the day
 def getDailyID(type):
 	dailyURL = "https://api.guildwars2.com/v2/achievements/daily"
 	requestJson = requestURL(dailyURL)[type]
@@ -16,6 +20,18 @@ def getDailyID(type):
 
 	return achID
 
+# Gathers the Daily IDs for tomorrow
+def getDailyTomorrowID(type):
+	dailyURL = "https://api.guildwars2.com/v2/achievements/daily/tomorrow"
+	requestJson = requestURL(dailyURL)[type]
+
+	achID = []
+	for achievement in requestJson:
+		achID.append(achievement['id'])
+
+	return achID
+
+# Gathers the Name, Description, and Requirements for the specified Achievement
 def getAchievement(id):
 	achievementURL = "https://api.guildwars2.com/v2/achievements?id=" + str(id)
 	requestJson = requestURL(achievementURL)
@@ -27,8 +43,14 @@ def getAchievement(id):
 	return achInfo
 
 
+"""
+EVENT SCRAPING
+TODO V2 API once it is released. V1 has been deprecated.
+"""
+
 def main():
-	# dailyJson = getDailyID('pvp')
+	dailyJson = getDailyTomorrowID('pvp')
+	pprint(dailyJson)
 	# getAchievement(1861)
 
 
